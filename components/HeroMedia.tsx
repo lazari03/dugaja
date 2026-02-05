@@ -2,7 +2,11 @@
 
 import { useEffect, useState } from "react";
 
-export function HeroMedia() {
+interface HeroMediaProps {
+  image: string;
+}
+
+export function HeroMedia({ image }: HeroMediaProps) {
   const [offset, setOffset] = useState(0);
 
   useEffect(() => {
@@ -17,10 +21,13 @@ export function HeroMedia() {
   }, []);
 
   return (
-    <div
-      className="hero-media"
-      style={{ transform: `translateY(${offset}px)` }}
-      aria-hidden="true"
-    />
+    <div className="hero-media" aria-hidden="true">
+      {/* REPLACE: Hero image */}
+      <img
+        src={image}
+        alt="Dugaja Photography Hero"
+        style={{ transform: `translateY(${offset}px)` }}
+      />
+    </div>
   );
 }

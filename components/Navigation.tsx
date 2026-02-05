@@ -2,27 +2,23 @@
 
 import { useEffect, useState } from "react";
 
-const navLinks = [
-  { label: "Projects", href: "#projects" },
-  { label: "Services", href: "#services" },
-  { label: "Safety", href: "#safety" },
-  { label: "Contact", href: "#contact" }
+const sidebarLinks = [
+  { label: "Home", href: "#home" },
+  { label: "Contact", href: "#contact" },
+  { label: "Packages", href: "#services" },
+  { label: "Portfolio", href: "#portfolio" },
+  { label: "About", href: "#about" }
+];
+
+const topLinks = [
+  { label: "Wedding", href: "#services" },
+  { label: "Birthdays", href: "#services" },
+  { label: "Corporate", href: "#services" },
+  { label: "Events", href: "#services" }
 ];
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
-
-    handleScroll();
-    window.addEventListener("scroll", handleScroll);
-
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
 
   useEffect(() => {
     if (!isOpen) {
@@ -41,43 +37,53 @@ export function Navigation() {
   }, [isOpen]);
 
   return (
-    <header className={`top-nav ${isScrolled ? "top-nav--scrolled" : ""}`}>
-      <div className="top-nav__inner">
-        <a className="top-nav__brand" href="#top">
-          ALEX BECHER
-        </a>
-        <nav className="top-nav__links" aria-label="Primary">
-          {navLinks.map((link) => (
+    <>
+      <aside className="sidebar-nav">
+        <div className="sidebar-nav__brand">DUGAJA</div>
+        <nav aria-label="Section navigation">
+          {sidebarLinks.map((link) => (
             <a key={link.href} href={link.href}>
               {link.label}
             </a>
           ))}
         </nav>
+      </aside>
+
+      <header className="top-menu">
+        <div className="top-menu__brand">Dugaja e Fotografisë</div>
+        <nav className="top-menu__links" aria-label="Primary">
+          {topLinks.map((link) => (
+            <a key={link.label} href={link.href}>
+              {link.label}
+            </a>
+          ))}
+        </nav>
         <button
-          className="top-nav__toggle"
+          className="top-menu__toggle"
           type="button"
           aria-expanded={isOpen}
           aria-controls="mobile-menu"
           onClick={() => setIsOpen((prev) => !prev)}
         >
           <span className="visually-hidden">Toggle menu</span>
-          <span className="top-nav__bar" />
-          <span className="top-nav__bar" />
-          <span className="top-nav__bar" />
+          <span className="top-menu__bar" />
+          <span className="top-menu__bar" />
+          <span className="top-menu__bar" />
         </button>
-      </div>
+      </header>
+
       <div
         id="mobile-menu"
         className={`mobile-menu ${isOpen ? "mobile-menu--open" : ""}`}
       >
         <div className="mobile-menu__content">
-          {navLinks.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setIsOpen(false)}>
+          {[...sidebarLinks, ...topLinks].map((link) => (
+            <a key={link.label} href={link.href} onClick={() => setIsOpen(false)}>
               {link.label}
             </a>
           ))}
         </div>
       </div>
-    </header>
+    </>
   );
 }
