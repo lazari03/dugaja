@@ -10,7 +10,7 @@ interface SectionProps {
 
 export function Section({ id, eyebrow, title, subtitle, children }: SectionProps) {
   return (
-    <section id={id} className="section" data-scroll-section>
+    <section id={id} className="section">
       <div className="section__header">
         {eyebrow ? <span className="eyebrow">{eyebrow}</span> : null}
         <h2>{title}</h2>

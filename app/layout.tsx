@@ -1,10 +1,9 @@
-import "locomotive-scroll/dist/locomotive-scroll.css";
 import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Dugaja e Fotografisë",
-  description: "Analog photography studio in the heart of Shkodër."
+  title: "Aria Solace Photography",
+  description: "Fine art photography for editorials, brands, and intimate celebrations."
 };
 
 export default function RootLayout({
@@ -14,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <div className="page">{children}</div>
+      </body>
     </html>
   );
 }
