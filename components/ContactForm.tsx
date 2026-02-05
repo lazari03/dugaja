@@ -6,7 +6,6 @@ const initialState = {
   name: "",
   email: "",
   message: "",
-  preferredDate: "",
   company: ""
 };
 
@@ -93,16 +92,6 @@ export function ContactForm() {
           value={formState.message}
           onChange={(event) => updateField("message", event.target.value)}
           placeholder="Tell me about your vision, dates, and location."
-        />
-      </label>
-      <label>
-        Preferred date
-        <input
-          required
-          name="preferredDate"
-          type="date"
-          value={formState.preferredDate}
-          onChange={(event) => updateField("preferredDate", event.target.value)}
         />
       </label>
       <button type="submit" disabled={status === "loading"}>

@@ -12,7 +12,6 @@ export async function POST(request: Request) {
       name?: string;
       email?: string;
       message?: string;
-      preferredDate?: string;
       company?: string;
     };
 
@@ -20,7 +19,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ message: "Request flagged." }, { status: 400 });
     }
 
-    if (!body.name || !body.email || !body.message || !body.preferredDate) {
+    if (!body.name || !body.email || !body.message) {
       return NextResponse.json({ message: "Missing required fields." }, { status: 400 });
     }
 
@@ -35,8 +34,7 @@ export async function POST(request: Request) {
     const payload = {
       name: body.name.trim(),
       email: body.email.trim().toLowerCase(),
-      message: body.message.trim(),
-      preferredDate: body.preferredDate
+      message: body.message.trim()
     };
 
     console.info("Contact request received", payload);
