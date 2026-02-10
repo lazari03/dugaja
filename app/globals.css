@@ -259,6 +259,12 @@ a {
   opacity: 0;
 }
 
+@media (max-width: 900px) {
+  .gallery-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
 @media (max-width: 720px) {
   .page {
     padding: 12px;
