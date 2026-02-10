@@ -13,7 +13,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="sq">
       <body>
         <Script src="https://cdn.tailwindcss.com" strategy="beforeInteractive" />
         {children}
