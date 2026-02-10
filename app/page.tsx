@@ -1,133 +1,149 @@
 import { ContactForm } from "@/components/ContactForm";
-import { Section } from "@/components/Section";
-import { siteContent } from "@/data/site";
+import { getStudioContent, resolveLocale, t } from "@/application/studioContent";
 
-export default function Home() {
+const heroImage =
+  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80";
+
+const galleryImages = [
+  "https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1484516758160-69878111a911?auto=format&fit=crop&w=900&q=80",
+  "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=900&q=80"
+];
+
+export default function Home({
+  searchParams
+}: {
+  searchParams?: { lang?: string };
+}) {
+  const locale = resolveLocale(searchParams?.lang);
+  const content = getStudioContent();
+  const alternateLocale = locale === "en" ? "sq" : "en";
+
   return (
-    <main>
-      <header className="hero">
-        <div className="hero__content">
-          <p className="eyebrow">{siteContent.location}</p>
-          <h1>{siteContent.name}</h1>
-          <p className="hero__role">{siteContent.role}</p>
-          <p className="hero__intro">{siteContent.intro}</p>
-          <div className="hero__actions">
-            <a className="button" href="#contact">
-              Book a session
-            </a>
-            <a className="button button--ghost" href="#portfolio">
-              View portfolio
-            </a>
+    <main className="studio">
+      <div className="poster-shell">
+        <header className="topbar">
+          <span className="asterisk" aria-hidden="true">
+            ✶
+          </span>
+          <div className="lang-toggle">
+            <span>{t(content.languageLabel, locale)}</span>
+            <a href={`/?lang=${alternateLocale}`}>{alternateLocale.toUpperCase()}</a>
           </div>
-        </div>
-        <div className="hero__visual">
-          <div className="hero__frame" aria-hidden="true">
-            <div className="hero__grid" />
-            <div className="hero__overlay">
-              <p>Capturing modern love, light, and movement.</p>
-            </div>
+        </header>
+
+        <section className="hero-panel" id="about">
+          <p className="hero-subtitle">{t(content.hero.subtitle, locale)}</p>
+          <h1>{content.studioName}</h1>
+          <p className="hero-lines">{t(content.hero.lineOne, locale)}</p>
+          <p className="hero-lines">{t(content.hero.lineTwo, locale)}</p>
+          <p className="hero-description">{t(content.hero.description, locale)}</p>
+        </section>
+
+        <nav className="site-nav" aria-label="Sections">
+          <a href="#about">{t(content.nav.about, locale)}</a>
+          <a href="#services">{t(content.nav.services, locale)}</a>
+          <a href="#philosophy">{t(content.nav.philosophy, locale)}</a>
+          <a href="#audience">{t(content.nav.audience, locale)}</a>
+          <a href="#contact">{t(content.nav.contact, locale)}</a>
+        </nav>
+
+        <section className="hero-image-wrap">
+          <img src={heroImage} alt="Analog portrait studio mood" className="hero-image" />
+        </section>
+
+        <section className="section-block section-block--light" id="services">
+          <h2>{t(content.whatWeDo.title, locale)}</h2>
+          <div className="card-grid">
+            {content.whatWeDo.items.map((item) => (
+              <article key={item.title.en} className="info-card">
+                <h3>{t(item.title, locale)}</h3>
+                <p>{t(item.description, locale)}</p>
+              </article>
+            ))}
           </div>
-        </div>
-      </header>
+        </section>
 
-      <Section
-        id="about"
-        eyebrow="About"
-        title="A calm, modern approach to visual storytelling"
-        subtitle="Every story is crafted with intention, from soft film grain to art-directed editorials."
-      >
-        <div className="cards">
-          {siteContent.highlights.map((item) => (
-            <article key={item.title} className="card">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        id="portfolio"
-        eyebrow="Portfolio"
-        title="Featured work"
-        subtitle="A curated selection of recent commissions and personal studies."
-      >
-        <div className="portfolio">
-          {siteContent.portfolio.map((item) => (
-            <article key={item.title} className="portfolio__item">
-              <div className="portfolio__meta">
-                <p className="portfolio__category">{item.category}</p>
-                <h3>{item.title}</h3>
-              </div>
-              <p>{item.description}</p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        id="services"
-        eyebrow="Services"
-        title="Tailored photography experiences"
-        subtitle="Intentional coverage designed around your needs, timeline, and aesthetic."
-      >
-        <div className="services">
-          {siteContent.services.map((service) => (
-            <article key={service.label} className="service">
-              <h3>{service.label}</h3>
-              <p>{service.detail}</p>
-            </article>
-          ))}
-        </div>
-      </Section>
-
-      <Section
-        id="safety"
-        eyebrow="Safety"
-        title="Safety-first collaboration"
-        subtitle="Every inquiry is protected with privacy-conscious practices."
-      >
-        <ul className="safety">
-          {siteContent.safety.map((item) => (
-            <li key={item}>{item}</li>
-          ))}
-        </ul>
-      </Section>
-
-      <Section
-        id="contact"
-        eyebrow="Contact"
-        title="Let's create something intentional"
-        subtitle="Share your vision and preferred dates, and we'll craft a tailored proposal."
-      >
-        <div className="contact">
-          <div className="contact__details">
-            <h3>Studio availability</h3>
-            <p>
-              Currently booking editorial and brand projects for Q3 2024, with limited weddings
-              each month to keep every story intimate.
-            </p>
-            <div className="contact__highlight">
-              <p>Email</p>
-              <span>hello@ariasolace.com</span>
-            </div>
-            <div className="contact__highlight">
-              <p>Based in</p>
-              <span>{siteContent.location}</span>
-            </div>
+        <section className="section-block section-block--light section-gallery">
+          <h2>{locale === "sq" ? "Galeri" : "Gallery"}</h2>
+          <div className="gallery-grid">
+            {galleryImages.map((image, index) => (
+              <img key={image} src={image} alt={`Studio visual ${index + 1}`} className="gallery-item" />
+            ))}
           </div>
-          <ContactForm />
-        </div>
-      </Section>
+        </section>
 
-      <footer className="footer">
-        <p>© {new Date().getFullYear()} {siteContent.name}. All rights reserved.</p>
-        <div className="footer__links">
-          <a href="#about">About</a>
-          <a href="#portfolio">Portfolio</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </footer>
+        <section className="section-block section-block--dark" id="philosophy">
+          <h2>{t(content.philosophy.title, locale)}</h2>
+          <p>{t(content.philosophy.intro, locale)}</p>
+          <ul>
+            {content.philosophy.points.map((point) => (
+              <li key={point.en}>{t(point, locale)}</li>
+            ))}
+          </ul>
+          <p>{t(content.philosophy.outro, locale)}</p>
+        </section>
+
+        <section className="section-block section-block--light">
+          <h2>{t(content.space.title, locale)}</h2>
+          <p>{t(content.space.description, locale)}</p>
+        </section>
+
+        <section className="section-block section-block--light" id="audience">
+          <h2>{t(content.nav.audience, locale)}</h2>
+          <ul className="audience-list">
+            {content.audience.items.map((item) => (
+              <li key={item.en}>{t(item, locale)}</li>
+            ))}
+          </ul>
+          <p className="audience-closing">{t(content.audience.closing, locale)}</p>
+        </section>
+
+        <section className="section-block section-block--dark">
+          <h2>{t(content.location.title, locale)}</h2>
+          <p className="location-address">{content.location.address}</p>
+          <p>{t(content.location.details, locale)}</p>
+
+          <h3>{t(content.sessions.title, locale)}</h3>
+          <ul>
+            {content.sessions.lines.map((line) => (
+              <li key={line.en}>{t(line, locale)}</li>
+            ))}
+          </ul>
+        </section>
+
+        <section className="section-block section-block--light" id="contact">
+          <h2>{t(content.contactForm.title, locale)}</h2>
+          <p>{t(content.contactForm.intro, locale)}</p>
+          <ContactForm
+            copy={{
+              nameLabel: t(content.contactForm.name, locale),
+              emailLabel: t(content.contactForm.email, locale),
+              messageLabel: t(content.contactForm.message, locale),
+              namePlaceholder: t(content.contactForm.namePlaceholder, locale),
+              emailPlaceholder: t(content.contactForm.emailPlaceholder, locale),
+              messagePlaceholder: t(content.contactForm.messagePlaceholder, locale),
+              submitLabel: t(content.contactForm.submit, locale),
+              sendingLabel: t(content.contactForm.sending, locale),
+              successMessage: t(content.contactForm.success, locale),
+              genericErrorMessage: t(content.contactForm.genericError, locale),
+              honeypotLabel: t(content.contactForm.honeypotLabel, locale)
+            }}
+          />
+        </section>
+
+        <section className="section-block section-block--light taglines">
+          <h2>{t(content.taglines.title, locale)}</h2>
+          <div>
+            {content.taglines.items.map((tag) => (
+              <p key={tag.en}>{t(tag, locale)}</p>
+            ))}
+          </div>
+        </section>
+      </div>
     </main>
   );
 }

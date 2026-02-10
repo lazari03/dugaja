@@ -2,8 +2,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Aria Solace Photography",
-  description: "Fine art photography for editorials, brands, and intimate celebrations."
+  title: "Dugaja e Fotografisë",
+  description: "Studio analoge fotografie në Shkodër / Analog photography studio in Shkodër."
 };
 
 export default function RootLayout({
@@ -12,10 +12,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body>
-        <div className="page">{children}</div>
-      </body>
+    <html lang="sq">
+      <body>{children}</body>
     </html>
   );
 }
