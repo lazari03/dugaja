@@ -2,6 +2,20 @@
 
 import { FormEvent, useState } from "react";
 
+interface ContactFormCopy {
+  nameLabel: string;
+  emailLabel: string;
+  messageLabel: string;
+  namePlaceholder: string;
+  emailPlaceholder: string;
+  messagePlaceholder: string;
+  submitLabel: string;
+  sendingLabel: string;
+  successMessage: string;
+  genericErrorMessage: string;
+  honeypotLabel: string;
+}
+
 const initialState = {
   name: "",
   email: "",
@@ -9,7 +23,7 @@ const initialState = {
   company: ""
 };
 
-export function ContactForm() {
+export function ContactForm({ copy }: { copy: ContactFormCopy }) {
   const [formState, setFormState] = useState(initialState);
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [notice, setNotice] = useState<string | null>(null);
@@ -33,22 +47,22 @@ export function ContactForm() {
       const data = (await response.json()) as { message?: string };
 
       if (!response.ok) {
-        throw new Error(data.message ?? "Unable to send your message.");
+        throw new Error(data.message ?? copy.genericErrorMessage);
       }
 
       setStatus("success");
-      setNotice("Message sent. We'll reply within 48 hours.");
+      setNotice(copy.successMessage);
       setFormState(initialState);
     } catch (error) {
       setStatus("error");
-      setNotice(error instanceof Error ? error.message : "Something went wrong.");
+      setNotice(error instanceof Error ? error.message : copy.genericErrorMessage);
     }
   };
 
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
       <label className="visually-hidden" htmlFor="company">
-        Company (leave blank)
+        {copy.honeypotLabel}
       </label>
       <input
         id="company"
@@ -62,40 +76,40 @@ export function ContactForm() {
       />
       <div className="field-grid">
         <label>
-          Name
+          {copy.nameLabel}
           <input
             required
             name="name"
             value={formState.name}
             onChange={(event) => updateField("name", event.target.value)}
-            placeholder="Your name"
+            placeholder={copy.namePlaceholder}
           />
         </label>
         <label>
-          Email
+          {copy.emailLabel}
           <input
             required
             name="email"
             type="email"
             value={formState.email}
             onChange={(event) => updateField("email", event.target.value)}
-            placeholder="you@email.com"
+            placeholder={copy.emailPlaceholder}
           />
         </label>
       </div>
       <label>
-        Project details
+        {copy.messageLabel}
         <textarea
           required
           name="message"
           rows={5}
           value={formState.message}
           onChange={(event) => updateField("message", event.target.value)}
-          placeholder="Tell me about your vision, dates, and location."
+          placeholder={copy.messagePlaceholder}
         />
       </label>
       <button type="submit" disabled={status === "loading"}>
-        {status === "loading" ? "Sending..." : "Send inquiry"}
+        {status === "loading" ? copy.sendingLabel : copy.submitLabel}
       </button>
       {notice ? <p className={`form-notice ${status}`}>{notice}</p> : null}
     </form>
