@@ -13,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="sq">
-      <body>{children}</body>
+      <body>
+        <div className="page">{children}</div>
+      </body>
     </html>
   );
 }

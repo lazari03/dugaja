@@ -1,18 +1,6 @@
 import { ContactForm } from "@/components/ContactForm";
 import { getStudioContent, resolveLocale, t } from "@/application/studioContent";
 
-const heroImage =
-  "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1600&q=80";
-
-const galleryImages = [
-  "https://images.unsplash.com/photo-1494959764136-6be9eb3c261e?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1484516758160-69878111a911?auto=format&fit=crop&w=900&q=80",
-  "https://images.unsplash.com/photo-1525134479668-1bee5c7c6845?auto=format&fit=crop&w=900&q=80"
-];
-
 export default function Home({
   searchParams
 }: {
@@ -51,10 +39,6 @@ export default function Home({
           <a href="#contact">{t(content.nav.contact, locale)}</a>
         </nav>
 
-        <section className="hero-image-wrap">
-          <img src={heroImage} alt="Analog portrait studio mood" className="hero-image" />
-        </section>
-
         <section className="section-block section-block--light" id="services">
           <h2>{t(content.whatWeDo.title, locale)}</h2>
           <div className="card-grid">
@@ -63,15 +47,6 @@ export default function Home({
                 <h3>{t(item.title, locale)}</h3>
                 <p>{t(item.description, locale)}</p>
               </article>
-            ))}
-          </div>
-        </section>
-
-        <section className="section-block section-block--light section-gallery">
-          <h2>{locale === "sq" ? "Galeri" : "Gallery"}</h2>
-          <div className="gallery-grid">
-            {galleryImages.map((image, index) => (
-              <img key={image} src={image} alt={`Studio visual ${index + 1}`} className="gallery-item" />
             ))}
           </div>
         </section>
